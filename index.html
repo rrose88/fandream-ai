@@ -1,64 +1,341 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#09090d">
-  <title>Fandream AI</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: #09090d;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      padding: 24px;
-    }
-    main { max-width: 480px; }
-    .logo {
-      font-size: 42px;
-      font-weight: 800;
-      letter-spacing: -2px;
-    }
-    .logo span { color: #b18aff; }
-    p { color: #aaa5b5; line-height: 1.7; }
-    button {
-      background: #b18aff;
-      color: #130d1d;
-      border: 0;
-      padding: 15px 28px;
-      border-radius: 30px;
-      font-weight: bold;
-      font-size: 16px;
-      margin-top: 20px;
-      cursor: pointer;
-    }
-    .tag {
-      color: #c7a9ff;
-      font-size: 12px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b0910">
+<title>Fandream AI</title>
+<style>
+:root {
+  --bg:#0b0910;
+  --panel:#17131e;
+  --panel2:#211a2b;
+  --purple:#b68aff;
+  --text:#fff;
+  --muted:#aaa2b4;
+}
+*{box-sizing:border-box}
+body{
+ margin:0;background:var(--bg);color:var(--text);
+ font-family:Inter,Arial,sans-serif;
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+header{
+ display:flex;align-items:center;justify-content:space-between;
+ padding:20px 6%;border-bottom:1px solid #28212f;
+}
+.logo{font-size:24px;font-weight:800;letter-spacing:-1px}
+.logo span{color:var(--purple)}
+.credits{
+ background:var(--panel2);padding:10px 15px;
+ border-radius:30px;color:var(--purple);font-size:13px;
+}
+main{max-width:1050px;margin:auto;padding:35px 20px}
+h1{font-size:34px;margin:0 0 10px}
+p{color:var(--muted);line-height:1.6}
+.hero{
+ background:linear-gradient(135deg,#261735,#17111f 65%,#11101a);
+ padding:35px;border-radius:22px;margin-bottom:28px;
+ border:1px solid #39294a;
+}
+.hero h1 span{color:var(--purple)}
+.primary{
+ background:var(--purple);color:#170f20;
+ border:0;padding:14px 22px;border-radius:12px;
+ font-weight:700;
+}
+.secondary{
+ background:var(--panel2);color:white;
+ border:1px solid #3b3048;padding:12px 18px;
+ border-radius:12px;
+}
+.section-title{font-size:20px;margin:28px 0 15px}
+.grid{
+ display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+ gap:15px;
+}
+.card{
+ background:var(--panel);border:1px solid #302638;
+ border-radius:17px;padding:20px;
+}
+.avatar{
+ width:100%;height:150px;object-fit:cover;
+ border-radius:12px;background:#30243b;
+}
+.field{margin:16px 0}
+label{display:block;font-size:13px;color:#c7bdcf;margin-bottom:8px}
+input,textarea,select{
+ width:100%;background:#100d16;color:white;
+ border:1px solid #41354b;border-radius:10px;
+ padding:13px;outline:none;
+}
+textarea{min-height:95px;resize:vertical}
+input:focus,textarea:focus,select:focus{border-color:var(--purple)}
+.options{display:flex;flex-wrap:wrap;gap:8px}
+.option{
+ border:1px solid #493b56;color:#ddd;
+ padding:10px 14px;border-radius:22px;
+ background:#17131e;
+}
+.option.active{background:#45305e;border-color:var(--purple);color:white}
+nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+nav button{flex:1;min-width:100px}
+.hidden{display:none!important}
+#preview{max-width:180px;max-height:220px;object-fit:cover;border-radius:15px}
+.chatbox{
+ height:310px;overflow-y:auto;background:#100d16;
+ padding:15px;border-radius:12px;margin-bottom:12px;
+}
+.message{background:#282034;padding:12px;border-radius:12px;margin:8px 0;max-width:85%}
+.message.me{margin-left:auto;background:#493363}
+footer{text-align:center;color:#777080;padding:35px;font-size:12px}
+.small{font-size:12px;color:var(--muted)}
+</style>
 </head>
 <body>
-  <main>
-    <div class="tag">Your imagination, your world</div>
-    <div class="logo">Fan<span>dream</span> AI</div>
-    <p>
-      Create your own AI characters, shape their
-      personalities and discover conversations
-      limited only by your imagination.
-    </p>
-    <button onclick="alert('Character creation is coming soon!')">
-      Create your character
-    </button>
-    <p>18+ Adults Only</p>
-  </main>
+<header>
+ <div class="logo">Fan<span>dream</span> AI</div>
+ <div class="credits">✦ <span id="credits">8</span> credits</div>
+</header>
+
+<main>
+ <section id="home">
+  <div class="hero">
+   <p>YOUR IMAGINATION. YOUR WORLD.</p>
+   <h1>Meet your next <span>AI companion.</span></h1>
+   <p>Create unique fictional characters, design their personalities
+   and build your own collection of AI companions.</p>
+   <button class="primary" onclick="show('creator')">＋ Create a character</button>
+  </div>
+  <h2 class="section-title">Your characters</h2>
+  <div id="library" class="grid">
+   <div class="card">
+    <h3>Your story starts here</h3>
+    <p>Your created characters will appear here.</p>
+   </div>
+  </div>
+ </section>
+
+ <section id="creator" class="hidden">
+  <button class="secondary" onclick="show('home')">← Back</button>
+  <h1 style="margin-top:25px">Create your character</h1>
+  <p>Give your character a name, personality and unique identity.</p>
+
+  <div class="card">
+   <div class="field">
+    <label>Character name</label>
+    <input id="name" placeholder="e.g. Sophia">
+   </div>
+
+   <div class="field">
+    <label>Character description</label>
+    <textarea id="description" placeholder="Describe your character..."></textarea>
+   </div>
+
+   <div class="field">
+    <label>Character gender</label>
+    <div class="options" data-group="gender">
+     <button class="option active">Woman</button>
+     <button class="option">Man</button>
+     <button class="option">Non-binary</button>
+    </div>
+   </div>
+
+   <div class="field">
+    <label>Personality (choose up to 3)</label>
+    <div class="options" data-group="personality" data-multi="true">
+     <button class="option">Friendly</button>
+     <button class="option">Confident</button>
+     <button class="option">Funny</button>
+     <button class="option">Romantic</button>
+     <button class="option">Adventurous</button>
+     <button class="option">Intellectual</button>
+     <button class="option">Shy</button>
+     <button class="option">Creative</button>
+    </div>
+   </div>
+
+   <div class="field">
+    <label>Relationship dynamic</label>
+    <div class="options" data-group="relationship">
+     <button class="option active">Friend</button>
+     <button class="option">Companion</button>
+     <button class="option">Mentor</button>
+     <button class="option">Romantic partner</button>
+    </div>
+   </div>
+
+   <div class="field">
+    <label>Portrait upload</label>
+    <input id="portrait" type="file" accept="image/png,image/jpeg,image/webp">
+    <p class="small">Use images you own or have permission to use.</p>
+    <img id="preview" class="hidden" alt="Character portrait preview">
+   </div>
+
+   <button class="primary" onclick="createCharacter()">Create character →</button>
+  </div>
+ </section>
+
+ <section id="profile" class="hidden">
+  <button class="secondary" onclick="show('home')">← Library</button>
+  <div class="card" style="margin-top:20px">
+   <img id="profileImage" class="avatar" alt="Character portrait">
+   <h1 id="profileName"></h1>
+   <p id="profileDescription"></p>
+   <p id="profilePersonality"></p>
+   <button class="primary" onclick="openChat()">Start conversation →</button>
+  </div>
+ </section>
+
+ <section id="chat" class="hidden">
+  <button class="secondary" onclick="show('profile')">← Character</button>
+  <h1 id="chatName" style="margin-top:20px"></h1>
+  <p>Conversation preview</p>
+  <div class="chatbox" id="messages">
+   <div class="message">Hello! It's lovely to meet you. What would you like to talk about?</div>
+  </div>
+  <div class="field">
+   <input id="chatInput" placeholder="Write a message..." onkeydown="if(event.key==='Enter')sendMessage()">
+  </div>
+  <button class="primary" onclick="sendMessage()">Send message</button>
+  <p class="small">Demo mode: AI responses will be connected in a later version.</p>
+ </section>
+</main>
+
+<footer>
+ Fandream AI · Fictional AI companions · Adults 18+<br>
+ Be creative. Be respectful. Stay safe.
+</footer>
+
+<script>
+let characters = JSON.parse(localStorage.getItem('fandreamCharacters') || '[]');
+let credits = Number(localStorage.getItem('fandreamCredits') || 8);
+let selectedCharacter = null;
+let imageData = '';
+
+document.getElementById('credits').textContent = credits;
+
+function show(section){
+ document.querySelectorAll('main section').forEach(s=>s.classList.add('hidden'));
+ document.getElementById(section).classList.remove('hidden');
+}
+
+document.querySelectorAll('.options').forEach(group=>{
+ group.addEventListener('click',e=>{
+  if(!e.target.classList.contains('option'))return;
+  if(group.dataset.multi){
+   const active=group.querySelectorAll('.active');
+   if(!e.target.classList.contains('active') && active.length>=3)return;
+   e.target.classList.toggle('active');
+  }else{
+   group.querySelectorAll('.option').forEach(b=>b.classList.remove('active'));
+   e.target.classList.add('active');
+  }
+ });
+});
+
+document.getElementById('portrait').addEventListener('change',e=>{
+ const file=e.target.files[0];
+ if(!file)return;
+ if(file.size>5*1024*1024){
+  alert('Please choose an image smaller than 5 MB.');
+  e.target.value='';
+  return;
+ }
+ const reader=new FileReader();
+ reader.onload=()=>{
+  imageData=reader.result;
+  document.getElementById('preview').src=imageData;
+  document.getElementById('preview').classList.remove('hidden');
+ };
+ reader.readAsDataURL(file);
+});
+
+function selected(group){
+ const el=document.querySelector('[data-group="'+group+'"]');
+ return [...el.querySelectorAll('.active')].map(x=>x.textContent);
+}
+
+function createCharacter(){
+ const name=document.getElementById('name').value.trim();
+ if(!name){alert('Please enter a character name.');return;}
+ const personality=selected('personality');
+ if(!personality.length){alert('Choose at least one personality trait.');return;}
+ const character={
+  id:Date.now(),
+  name,
+  description:document.getElementById('description').value,
+  gender:selected('gender')[0],
+  personality,
+  relationship:selected('relationship')[0],
+  image:imageData
+ };
+ characters.push(character);
+ save();
+ selectedCharacter=character;
+ renderLibrary();
+ showProfile();
+}
+
+function save(){
+ localStorage.setItem('fandreamCharacters',JSON.stringify(characters));
+}
+
+function renderLibrary(){
+ const library=document.getElementById('library');
+ if(!characters.length)return;
+ library.innerHTML='';
+ characters.forEach(c=>{
+  const card=document.createElement('div');
+  card.className='card';
+  const img=document.createElement('img');
+  img.className='avatar';
+  img.alt='Character portrait';
+  if(c.image)img.src=c.image;
+  else img.style.display='none';
+  const title=document.createElement('h3');
+  title.textContent=c.name;
+  const desc=document.createElement('p');
+  desc.textContent=c.personality.join(' · ');
+  const btn=document.createElement('button');
+  btn.className='primary';
+  btn.textContent='View character';
+  btn.onclick=()=>{selectedCharacter=c;showProfile()};
+  card.append(img,title,desc,btn);
+  library.append(card);
+ });
+}
+
+function showProfile(){
+ document.getElementById('profileName').textContent=selectedCharacter.name;
+ document.getElementById('profileDescription').textContent=selectedCharacter.description;
+ document.getElementById('profilePersonality').textContent=
+ selectedCharacter.personality.join(' · ')+' | '+selectedCharacter.relationship;
+ const img=document.getElementById('profileImage');
+ img.src=selectedCharacter.image||'';
+ img.style.display=selectedCharacter.image?'block':'none';
+ show('profile');
+}
+
+function openChat(){
+ document.getElementById('chatName').textContent=selectedCharacter.name;
+ show('chat');
+}
+
+function sendMessage(){
+ const input=document.getElementById('chatInput');
+ const value=input.value.trim();
+ if(!value)return;
+ const message=document.createElement('div');
+ message.className='message me';
+ message.textContent=value;
+ document.getElementById('messages').append(message);
+ input.value='';
+ message.scrollIntoView({behavior:'smooth'});
+}
+
+renderLibrary();
+</script>
 </body>
 </html>
